@@ -3,8 +3,8 @@
 # Benjamin Michael Taylor (bentaylorhk)
 # 2025
 
-# Script which produces the suitable bash commands
-# from its command line args, which can then be executed.
+# Script which produces suitable bash commands
+# from a given prompt, which can then be executed.
 
 from openai import OpenAI
 from pydantic import BaseModel
@@ -22,7 +22,7 @@ Generate one or more Bash commands that best accomplish the task described by th
 Output Requirements:
 - Output *only* the Bash command(s), with no explanations or additional text.  
 - Ensure strict adherence to valid Bash syntax.  
-- Format the output for human-readability.
+- Format the output for human-readability, opting to use readability flags where possible.
 
 Execution Context:
 - Commands will run on *Arch Linux*, so prefer Arch-specific tools if applicable.  
