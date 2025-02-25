@@ -1,2 +1,4 @@
 # polyai
-Script which produces the suitable bash commands from its command line args, which can then be executed.
+
+Script which produces suitable bash commands
+from a given prompt, which can then be executed.
