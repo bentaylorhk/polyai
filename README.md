@@ -1,4 +1,4 @@
 # polyai
 
-Script which produces suitable bash commands
-from a given prompt, which can then be executed.
+Script which produces a bash command described by a given prompt.
+The command is produced with the OpenAI API, which can then be executed.

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Script which produces a bash command best describing
-a given prompt, which can then be executed.
+Script which produces a bash command described by a given prompt.
+The command is produced with the OpenAI API, which can then be executed.
 
 Benjamin Michael Taylor (bentaylorhk)
 2025
