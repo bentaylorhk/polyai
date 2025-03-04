@@ -1,39 +1,51 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# Benjamin Michael Taylor (bentaylorhk)
-# 2025
+"""
+Script which produces a bash command best describing
+a given prompt, which can then be executed.
 
-# Script which produces suitable bash commands
-# from a given prompt, which can then be executed.
+Benjamin Michael Taylor (bentaylorhk)
+2025
+"""
 
+__version__ = "1.0.0"
+__author__ = "Benjamin Taylor"
+
+import os
 from openai import OpenAI
 from pydantic import BaseModel
 import subprocess
 import sys
 
 
-class BashCommands(BaseModel):
-    commands: list[str]
+class BashCommand(BaseModel):
+    command: str
 
 
 system_prompt = """
-Generate one or more Bash commands that best accomplish the task described by the user.  
+Generates a Bash command that best accomplish the task described by the user.
 
 Output Requirements:
-- Output *only* the Bash command(s), with no explanations or additional text.  
-- Ensure strict adherence to valid Bash syntax.  
+- Output *only* the Bash command, with no explanations or additional text.
+- Ensure strict adherence to valid Bash syntax.
 - Format the output for human-readability, opting to use readability flags where possible.
 
 Execution Context:
-- Commands will run on *Arch Linux*, so prefer Arch-specific tools if applicable.  
+- Command will run on *Arch Linux*, so prefer Arch-specific tools if applicable
 
 Usability Considerations:
-- If multiple commands are required, separate them with `&&` where appropriate.  
-- Favor safe, efficient, and commonly available tools.  
+- If multiple commands are required, prioritise separating them with `&&` before newlines.
+- Favor safe, efficient, modern and commonly available tools
 """
 
 
 def main():
+    if len(sys.argv) == 1 or sys.argv[1] == "--help":
+        script_name = os.path.splitext(os.path.basename(__file__))[0]
+        print(f"Usage: {script_name} <prompt>")
+        exit(0)
+
     user_prompt = " ".join(sys.argv[1:])
 
     client = OpenAI()
@@ -43,19 +55,18 @@ def main():
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
-        response_format=BashCommands,
+        response_format=BashCommand,
     )
 
-    commands = completion.choices[0].message.parsed.commands
+    command = completion.choices[0].message.parsed.command
 
-    for i, cmd in enumerate(commands, start=1):
-        print(f"{i}. {cmd}")
+    print(command)
 
-    choice = int(input("Select command: ")) - 1
+    choice = input("Execute command [Y/n]: ")
 
-    if 0 <= choice and choice < len(commands):
-        print(commands[choice])
-        subprocess.run(commands[choice], shell=True)
+    if choice.lower() == "y":
+        print(command)
+        subprocess.run(command, shell=True)
 
 
 if __name__ == "__main__":
