@@ -1,0 +1,28 @@
+# Benjamin Michael Taylor (bentaylorhk)
+# 2025
+
+[build-system]
+requires = ["setuptools>=65.5"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polyai"
+version = "0.1.0"
+description = "Script which produces a bash command described by a given prompt. The command is produced with the OpenAI API, which can then be executed."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Benjamin Michael Taylor" }]
+dependencies = ["openai", "pydantic"]
+keywords = ["AI", "machine-learning", "chatbot", "bash", "cli"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/bentaylorhk/polyai"
+Repository = "https://github.com/bentaylorhk/polyai.git"
+
+[project.scripts]
+polyai = "polyai.polyai:main"
