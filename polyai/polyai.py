@@ -22,7 +22,7 @@ class BashCommand(BaseModel):
     Simple format for the models response. Getting
     a response with this model much more reliably
     gets responses without markup formatting in it
-    ( even if you state so in the system prompt >:( )
+    even if stated so in the system prompt >:(
     """
 
     command: str
