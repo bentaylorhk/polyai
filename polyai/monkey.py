@@ -9,14 +9,51 @@ Benjamin Michael Taylor (bentaylorhk)
 
 import time
 
-MOVE_UP_ROW = "\033[F"
-CLEAR_ROW = "\033[K"
+# Format string for the monkey animation
+# 0 - eye
+# 1 - mouth
+# 2 - tail top (2 chars)
+# 3 - tail bottom
+# 4 - thoughts
+# 5 - inline prompt
+MONKEY_FORMAT = """
+  -      {4}
+c{0}{1}{0}o  .-{2}    {5}
+(| |)_/   {3}
+"""
+
+TAIL_1 = "-'"
+TAIL_2 = "-."
+TAIL_3 = ". "
+
+TAIL_BOTTOM_1 = TAIL_BOTTOM_2 = " "
+TAIL_BOTTOM_3 = "`"
+
+CLOSED_MOUTH = "_"
+OPEN_MOUTH = "O"
+
+CLOSED_EYE = "-"
+OPEN_EYE = "'"
+
 
 def clear_lines(num: int):
     """
     Function which clears *num* previous rows of stdout
     """
-    print((MOVE_UP_ROW + CLEAR_ROW) * num, end="")
+    # Move up row, then clear row, num times
+    print("\033[F\033[K" * num, end="")
+
+
+def print_monkey(
+    eye: str,
+    mouth: str = CLOSED_MOUTH,
+    tail_top: str = TAIL_1,
+    tail_bottom: str = TAIL_BOTTOM_1,
+    thoughts: str = "",
+    prompt: str = "",
+):
+    print(MONKEY_FORMAT.format(eye, mouth, tail_top, tail_bottom, thoughts, prompt))
+
 
 def main():
     # Prevent clearing prompt line
@@ -46,11 +83,5 @@ def main():
             count = 0
 
 
-
-
-    
-    
-
 if __name__ == "__main__":
     main()
-
